@@ -10,7 +10,7 @@ async function createServer(
   root = process.cwd(),
   isProd = process.env.NODE_ENV === "production"
 ) {
-  const resolve = (p) => _resolve(__dirname, p);
+  const resolve = (p: string) => _resolve(__dirname, p);
 
   const indexProd = isProd
     ? readFileSync(resolve("dist/client/index.html"), "utf-8")
@@ -53,7 +53,7 @@ async function createServer(
         // always read fresh template in dev
         template = readFileSync(resolve("index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule("/src/entry-server.jsx")).render;
+        render = (await vite.ssrLoadModule("/src/entry-server.tsx")).render;
       } else {
         template = indexProd;
         render = require("./dist/server/entry-server.js").render;
