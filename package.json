@@ -6,12 +6,12 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf server.js dist/",
-    "dev": "ts-node server",
+    "dev": "ts-node server.ts",
     "build": "yarn build:client && yarn build:server && yarn build:ts",
     "build:ts": "tsc server.ts",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
-    "start": "cross-env NODE_ENV=production node server"
+    "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
     "react": "^17.0.2",
