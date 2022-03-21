@@ -48,7 +48,7 @@ async function createServer(
       const url = req.originalUrl;
 
       let template: string | Buffer | IndexHtmlTransformResult;
-      let render: (url: string, context: any) => string;
+      let render: (url: string) => string;
       if (!isProd) {
         // always read fresh template in dev
         template = readFileSync(resolve("index.html"), "utf-8");
@@ -59,13 +59,7 @@ async function createServer(
         render = require("./dist/server/entry-server.js").render;
       }
 
-      const context = {} as { url: string };
-      const appHtml = render(url, context);
-
-      if (context.url) {
-        // Somewhere a <Redirect /> was rendered
-        return res.redirect(301, context.url);
-      }
+      const appHtml = render(url);
 
       const html = template.replace(`<!--app-html-->`, appHtml);
 
